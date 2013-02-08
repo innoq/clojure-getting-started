@@ -1,2 +1,1 @@
-clojure-getting-started
-=======================
+# clojure-getting-started
