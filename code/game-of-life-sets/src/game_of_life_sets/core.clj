@@ -1,4 +1,13 @@
 (ns game-of-life-sets.core
+  "set-based implementation of game of life
+
+   the world is represented as a set of positions with living cells, e.g. #{[0 0] [1 0] [2 0]}
+   is a representation of 'blinker'
+
+   usage example:
+   - (def world (create-world)) to create an empty world
+   - (def blinker (populate-cells world [0 0] [1 0] [2 0])) to create 'blinker'
+   - (next-world blinker) to obtain the next world"
   (:require [clojure.set :as s]))
 
 (defn create-world []
