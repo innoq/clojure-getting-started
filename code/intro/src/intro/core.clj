@@ -90,8 +90,6 @@ stuff ;-> [1 2 3]
 
 (assoc {:a 1} :b 2) ;-> {:a 1 :b 2}
 
-(cons 0 [1 2 3]) ;-> (0 1 2 3)
-
                                         ; Definieren von Funktionen
 
 ;; anonyme Funktion
@@ -168,11 +166,7 @@ stuff ;-> [1 2 3]
 (counter1) ;; 4
 (counter2) ;; 19
 
-                                        ; Lazy Sequences
-
-;; Clojures Collection-Library arbeitet mit Sequence-Abstraktion (first, rest, cons)
-(count [1 2 3])
-(count {:a 1 :b 2 :c 3})
+                                        ; Collection-spezifische Funktionen
 
 (conj [1 2 3] 4)
 
@@ -182,7 +176,19 @@ stuff ;-> [1 2 3]
 
 (conj {:a 1 :b 2 :c 3} [:d 4])
 
-;; Collections sind alle immutable (Persistent Data Structures)
+(count [1 2 3])
+
+(count {:a 1 :b 2 :c 3})
+
+                                        ; Sequences
+
+;; Clojures Collection-Library arbeitet mit Sequence-Abstraktion (first, rest, cons)
+
+(first [1 2 3]) ;-> 1
+
+(rest [1 2 3]) ;-> (2 3)
+
+(cons 0 [1 2 3]) ;-> (0 1 2 3)
 
 ;; Factory für Sequences
 (seq [1 2 3])
@@ -194,13 +200,25 @@ stuff ;-> [1 2 3]
 (.add array-list 3)
 (seq array-list)
 
-;; count, empty?, partition, take, drop, iterate, cycle
+(map inc array-list)
+
+(comment
+(with-open [rdr (clojure.java.io/reader "project.clj")]
+  (let [lines (line-seq rdr)
+        nums (iterate inc 1)]
+    (doseq [[n l] (map vector nums lines)]
+      (println n "->" l))))
+)
+
+;; empty?, partition, take, drop, iterate, cycle
+
+                                        ; Lazy Seqs
 
 (defn tracing-inc [num]
   (println "incrementing" num)
   (inc num))
 
-;; Clojure Collection Functions geben i.A. Lazy Sequences zurück
+;; Clojure Collection Functions geben i.A. lazy Sequences zurück
 (map tracing-inc [1 2 3]) ;; -> Berechnung erfolgt erst, wenn das Ergebnis ausgegeben werden soll
 
 (take 10 (iterate tracing-inc 1))
