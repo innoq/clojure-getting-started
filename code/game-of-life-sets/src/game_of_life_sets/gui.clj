@@ -51,11 +51,11 @@
    (filter #(on-grid? % width height) world)))
 
 (defn run [world]
-  (let [worlds (iterate c/next-world world)
+  (let [worlds (cons world (c/game-of-life world))
         grids (map #(world->grid % 50 30) worlds)
         state (atom (first grids))]
     (.start (Thread. #(doseq [grid (rest grids)]
-                        (Thread/sleep 500)
+                        (Thread/sleep 300)
                         (reset! state grid))))
     (render state)))
 
