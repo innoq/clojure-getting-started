@@ -1,3 +1,3 @@
 # game-of-life-sets
 
-Etwas elegantere Implementierung von Game of Life.
+Game of Life Implementierung auf der Basis von Sets und mit der Möglichkeit, leichter andere zelluläre Automaten zu bauen.
