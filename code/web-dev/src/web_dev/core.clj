@@ -1,4 +1,4 @@
-(ns ring-demo.core
+(ns web-dev.core
   (:use [ring.adapter.jetty :only [run-jetty]]
         [ring.util.response :only [redirect]]
         [ring.middleware.resource :only [wrap-resource]]
