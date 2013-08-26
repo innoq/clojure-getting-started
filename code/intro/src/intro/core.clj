@@ -227,23 +227,61 @@ stuff ;-> [1 2 3]
 (defn map-1 [f coll]
   (if (empty? coll)
     coll
-    (cons (f (first coll)) (map-1 f (rest coll)))))
+    (cons
+     (f (first coll))
+     (map-1 f (rest coll)))))
 
 ;; Laziness
 (defn map-2 [f coll]
   (lazy-seq
    (if (empty? coll)
      coll
-     (cons (f (first coll)) (map-2 f (rest coll))))))
+     (cons
+      (f (first coll))
+      (map-2 f (rest coll))))))
 
 ;; Tail-Recursion
-(defn reduce-1 [f val coll]
+(defn reduce-1 [f acc coll]
   (if (empty? coll)
-    val
-    (reduce-1 f (f val (first coll)) (rest coll))))
+    acc
+    (reduce-1 f
+              (f acc (first coll))
+              (rest coll))))
 
 ;; loop/recur
 (defn reduce-2 [f val coll]
   (if (empty? coll)
     val
-    (recur f (f val (first coll)) (rest coll))))
+    (recur f
+           (f val (first coll))
+           (rest coll))))
+
+
+;; Pipes/Threading
+(-> [1 2 3]
+    (conj 4)
+    (conj 5))
+
+(conj (conj [1 2 3] 4) 5)
+
+(->> [1 2 3]
+     (map inc)
+     (filter even?))
+
+;; Destructuring
+(let [[a b] [1 2]]
+  (format "a is %s and b is %s" a b))
+
+(let [[a b & more] (range 10)]
+  (format "a is %s, b is %s and more is %s" a b more))
+
+(let [{n :name} {:name "Hannes" :age 45}]
+  (format "n is %s" n))
+
+(let [{:keys [name]} {:name "Hannes" :age 45}]
+  (format "name is %s" name))
+
+;; optionale Argumente
+(defn foo [& {:keys [x y] :or {x 1 y 2}}]
+  [x y])
+
